@@ -16,9 +16,17 @@ class Playlist(db.Model):
     name = db.Column(db.String(30))
     description = db.Column(db.Text)
 
-    songs = db.relationship('Song.',
+    songs = db.relationship('Song',
                             secondary='playlists_songs',
                             backref='playlists')
+
+    @classmethod
+    def addPlaylist(self, name, desc):
+        """Add playlist to DB"""
+        playlist = Playlist(name=name, description=desc)
+        
+        db.session.add(playlist)
+        db.session.commit()
 
 class Song(db.Model):
     """Song."""
@@ -30,6 +38,14 @@ class Song(db.Model):
                     autoincrement=True)
     title = db.Column(db.String(50))
     artist = db.Column(db.String(50))
+
+    @classmethod
+    def addSong(self, title, artist):
+        """Add playlist to DB"""
+        song = Song(title=title, artist=artist)
+        
+        db.session.add(song)
+        db.session.commit()
 
 
 class PlaylistSong(db.Model):

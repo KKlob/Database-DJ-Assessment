@@ -2,6 +2,27 @@
 
 {% block content %}
 
-<h1>Add a form that when submitted creates a new playlist!</h1>
+<div class="row justify-content-center">
+    <div class="col-6 align-self-center">
+        <form id="new_playlist_form" method="POST">
+            {{form.hidden_tag()}}
+
+            {% for field in form
+            if field.widget.input_type != 'hidden' %}
+
+            <p>
+                {{ field.label }}
+                {{ field(class_="form-control") }}
+
+                {% for error in field.errors %}
+                {{ error }}
+                {% endfor %}
+            </p>
+
+            {% endfor %}
+            <button class="btn btn-success" type="submit">Add Playlist</button>
+        </form>
+    </div>
+</div>
 
 {% endblock %}
